@@ -4,13 +4,15 @@
 
 As aplicações do projeto (exceto o frontend) são executadas via Docker Compose.
 
-## Testes Automatizados
 
+## Testes Automatizados e Coverage
 - Todos os serviços backend possuem testes automatizados.
 - Os testes não acessam o banco real, sempre usam mocks.
+- Coverage configurado via Jest, ignorando arquivos da pasta `dist`.
 - Para rodar os testes:
 	```bash
 	npm test
+	npm run test:coverage
 	```
 
 

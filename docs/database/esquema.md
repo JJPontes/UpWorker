@@ -55,7 +55,9 @@ O sistema utiliza PostgreSQL para persistência dos dados. Os principais modelos
 - lida (boolean)
 - criado_em (timestamp)
 
+
 ## Observações
 
 - O relacionamento entre usuários e chamados é feito via campo `solicitante` (email ou nome do usuário) e pelas FKs das tabelas auxiliares.
 - O backend está pronto para integração real com o banco, e as tabelas são criadas automaticamente ao subir o container Docker.
+- Testes automatizados e coverage configurados, ignorando arquivos da pasta `dist`.

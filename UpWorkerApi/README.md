@@ -1,7 +1,8 @@
 # UpWorker API
 
 Backend Node.js/Express/TypeScript para o sistema UpWorker.
-## Testes Automatizados
+
+## Testes Automatizados e Coverage
 
 - Todos os testes estão organizados em `src/__tests__` por tipo:
 	- `controller/` para controllers
@@ -10,9 +11,11 @@ Backend Node.js/Express/TypeScript para o sistema UpWorker.
 	- `models/` para models
 	- `utils/` para utilitários
 - Todos os testes usam mocks, sem acesso ao banco real.
+- Coverage configurado via Jest, ignorando arquivos da pasta `dist`.
 - Para rodar os testes:
 	```bash
 	npm test
+	npm run test:coverage
 	```
 
 ## Estrutura de Pastas
@@ -33,10 +36,13 @@ UpWorkerApi/
 			utils/
 ```
 
+
 ## Boas práticas
 - Nunca acesse o banco real nos testes, sempre use mock.
 - Separe os testes por pasta conforme o tipo.
 - Use Jest + Supertest para testes de API.
+- Coverage ignora arquivos da pasta `dist`.
+- Use `AppBar` e toolbars fixos no topo para melhor UX no frontend.
 
 ## Exemplo de comando
 ```bash
@@ -53,12 +59,18 @@ npm test
 - Separação controller/repository
 - Integração via Docker Compose
 
+
 ## Como rodar
 
 ### Local
 
 1. Instale dependências: `yarn install` ou `npm install`
 2. Configure o banco PostgreSQL local (veja `.env`)
+3. Para rodar testes e coverage:
+	```bash
+	npm test
+	npm run test:coverage
+	```
 3. Rode: `yarn dev` ou `npm run dev`
 
 ### Docker Compose
