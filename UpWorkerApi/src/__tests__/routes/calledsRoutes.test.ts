@@ -34,7 +34,7 @@ describe('Calleds Routes', () => {
     if (res.status === 201) {
       expect(res.body).toEqual(mockCalled);
     } else {
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     }
   });
 
@@ -43,7 +43,7 @@ describe('Calleds Routes', () => {
       .post('/calleds')
       .send({ titulo: '', tipoChamado: '', tipoMudanca: '', dataExecucao: '', script: '', solicitante: '' });
     expect(res.status).toBe(400);
-    expect(res.body.erro).toBeDefined();
+    expect(res.body.error).toBeDefined();
   });
 
   it('POST /calleds - descrição de bug insuficiente', async () => {
@@ -58,7 +58,7 @@ describe('Calleds Routes', () => {
         solicitante: 'user'
       });
     expect(res.status).toBe(400);
-    expect(res.body.erro).toBeDefined();
+    expect(res.body.error).toBeDefined();
     // Valida sugestao apenas se existir
     if ('sugestao' in res.body) {
       expect(res.body.sugestao).not.toBeUndefined();
@@ -80,7 +80,7 @@ describe('Calleds Routes', () => {
     // Se o controller faz validação antes de chamar o repository, pode retornar 400 se faltar campo
     // Para garantir que o mock seja chamado, todos os campos obrigatórios estão presentes
     expect(res.status === 500 || res.status === 400).toBe(true);
-    expect(res.body.erro).toBeDefined();
+    expect(res.body.error).toBeDefined();
   });
 
   it('POST /calleds/1/aprovar - perfil errado', async () => {
@@ -88,7 +88,7 @@ describe('Calleds Routes', () => {
       .post('/calleds/1/aprovar')
       .set('x-perfil', 'Outro');
     expect(res.status).toBe(403);
-    expect(res.body.erro).toBeDefined();
+    expect(res.body.error).toBeDefined();
   });
 
   it('POST /calleds/1/aprovar - chamado não encontrado', async () => {
@@ -97,7 +97,7 @@ describe('Calleds Routes', () => {
       .post('/calleds/1/aprovar')
       .set('x-perfil', 'Analista');
     expect(res.status).toBe(404);
-    expect(res.body.erro).toBeDefined();
+    expect(res.body.error).toBeDefined();
   });
 
   it('POST /calleds/1/aprovar - erro interno', async () => {
@@ -106,7 +106,7 @@ describe('Calleds Routes', () => {
       .post('/calleds/1/aprovar')
       .set('x-perfil', 'Analista');
     expect(res.status).toBe(500);
-    expect(res.body.erro).toBeDefined();
+    expect(res.body.error).toBeDefined();
   });
 
   // Repita para revisar, reprovar, agendar, executar conforme o padrão acima
@@ -116,7 +116,7 @@ describe('Calleds Routes', () => {
         .post('/calleds/1/revisar')
         .set('x-perfil', 'Outro');
       expect(res.status).toBe(403);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     it('POST /calleds/1/revisar - chamado não encontrado', async () => {
@@ -125,7 +125,7 @@ describe('Calleds Routes', () => {
         .post('/calleds/1/revisar')
         .set('x-perfil', 'Analista');
       expect(res.status).toBe(404);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     it('POST /calleds/1/revisar - erro interno', async () => {
@@ -134,7 +134,7 @@ describe('Calleds Routes', () => {
         .post('/calleds/1/revisar')
         .set('x-perfil', 'Analista');
       expect(res.status).toBe(500);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     // --- Reprovar ---
@@ -143,7 +143,7 @@ describe('Calleds Routes', () => {
         .post('/calleds/1/reprovar')
         .set('x-perfil', 'Outro');
       expect(res.status).toBe(403);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     it('POST /calleds/1/reprovar - chamado não encontrado', async () => {
@@ -152,7 +152,7 @@ describe('Calleds Routes', () => {
         .post('/calleds/1/reprovar')
         .set('x-perfil', 'Analista');
       expect(res.status).toBe(404);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     it('POST /calleds/1/reprovar - erro interno', async () => {
@@ -161,7 +161,7 @@ describe('Calleds Routes', () => {
         .post('/calleds/1/reprovar')
         .set('x-perfil', 'Analista');
       expect(res.status).toBe(500);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     // --- Agendar ---
@@ -170,7 +170,7 @@ describe('Calleds Routes', () => {
         .post('/calleds/1/agendar')
         .set('x-perfil', 'Outro');
       expect(res.status).toBe(403);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     it('POST /calleds/1/agendar - chamado não encontrado', async () => {
@@ -179,7 +179,7 @@ describe('Calleds Routes', () => {
         .post('/calleds/1/agendar')
         .set('x-perfil', 'Analista');
       expect(res.status).toBe(404);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     it('POST /calleds/1/agendar - erro interno', async () => {
@@ -188,7 +188,7 @@ describe('Calleds Routes', () => {
         .post('/calleds/1/agendar')
         .set('x-perfil', 'Analista');
       expect(res.status).toBe(500);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     // --- Executar ---
@@ -197,7 +197,7 @@ describe('Calleds Routes', () => {
         .post('/calleds/1/executar')
         .set('x-perfil', 'Outro');
       expect(res.status).toBe(403);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     it('POST /calleds/1/executar - chamado não encontrado', async () => {
@@ -207,7 +207,7 @@ describe('Calleds Routes', () => {
         .set('x-perfil', 'Analista');
       // Se o controller exige perfil específico, pode retornar 403
       expect([404, 403]).toContain(res.status);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     it('POST /calleds/1/executar - erro interno', async () => {
@@ -217,7 +217,7 @@ describe('Calleds Routes', () => {
         .set('x-perfil', 'Analista');
       // Se o controller exige perfil específico, pode retornar 403
       expect([500, 403]).toContain(res.status);
-      expect(res.body.erro).toBeDefined();
+      expect(res.body.error).toBeDefined();
     });
 
     // --- Sucesso Revisar ---
@@ -232,7 +232,7 @@ describe('Calleds Routes', () => {
         expect(res.body.id).toBe(1);
         expect(res.body.titulo).toContain('Chamado');
       } else {
-        expect(res.body.erro).toBeDefined();
+        expect(res.body.error).toBeDefined();
       }
     });
 
@@ -248,7 +248,7 @@ describe('Calleds Routes', () => {
         expect(res.body.id).toBe(1);
         expect(res.body.titulo).toContain('Chamado');
       } else {
-        expect(res.body.erro).toBeDefined();
+        expect(res.body.error).toBeDefined();
       }
     });
 
@@ -264,7 +264,7 @@ describe('Calleds Routes', () => {
         expect(res.body.id).toBe(1);
         expect(res.body.titulo).toContain('Chamado');
       } else {
-        expect(res.body.erro).toBeDefined();
+        expect(res.body.error).toBeDefined();
       }
     });
 
@@ -280,7 +280,7 @@ describe('Calleds Routes', () => {
         expect(res.body.id).toBe(1);
         expect(res.body.titulo).toContain('Chamado');
       } else {
-        expect(res.body.erro).toBeDefined();
+        expect(res.body.error).toBeDefined();
       }
     });
 });
