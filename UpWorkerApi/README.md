@@ -60,23 +60,41 @@ npm test
 - Integração via Docker Compose
 
 
-## Como rodar
 
-### Local
+## Como instalar e executar o Backend
 
-1. Instale dependências: `yarn install` ou `npm install`
-2. Configure o banco PostgreSQL local (veja `.env`)
-3. Para rodar testes e coverage:
+### Instalação
+1. Acesse a pasta do backend:
+	```bash
+	cd UpWorkerApi
+	```
+2. Instale as dependências:
+	```bash
+	npm install # ou yarn install
+	```
+3. Configure o banco PostgreSQL local (veja `.env`)
+
+### Execução Local
+1. Inicie o backend:
+	```bash
+	npm run dev # ou yarn dev
+	```
+2. O backend estará disponível em `http://localhost:3001`
+
+### Testes e Coverage
+1. Para rodar testes e coverage:
 	```bash
 	npm test
 	npm run test:coverage
 	```
-3. Rode: `yarn dev` ou `npm run dev`
 
-### Docker Compose
-
+### Execução via Docker Compose
 1. Configure variáveis em `.env.docker` se necessário
-2. Rode: `docker compose up -d`
+2. Na pasta raiz do projeto, rode:
+	```bash
+	docker compose up -d
+	```
+3. O backend estará disponível em `http://localhost:3001`
 
 ## Documentação
 

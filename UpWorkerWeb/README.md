@@ -42,11 +42,29 @@ UpWorkerWeb/
 - Responsividade e acessibilidade
 - Filtros dinâmicos, chips de filtros ativos, Drawer/hamburguer para mobile
 
-## Como rodar
 
-1. Instale dependências: `yarn install` ou `npm install`
-2. Rode: `yarn dev` ou `npm run dev`
-3. Acesse: [http://localhost:5173](http://localhost:5173)
+## Como instalar e executar o Frontend
+
+### Instalação
+1. Acesse a pasta do frontend:
+	```bash
+	cd UpWorkerWeb
+	```
+2. Instale as dependências:
+	```bash
+	npm install # ou yarn install
+	```
+
+### Execução Local
+1. Inicie o frontend:
+	```bash
+	npm run dev # ou yarn dev
+	```
+2. Acesse: [http://localhost:5173](http://localhost:5173)
+
+### Integração com Backend
+- O proxy Vite redireciona `/api` para o backend (`http://localhost:3001`)
+- Certifique-se que o backend está rodando antes de acessar o frontend.
 
 ## Integração com Backend
 
