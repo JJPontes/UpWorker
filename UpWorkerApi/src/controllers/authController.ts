@@ -11,7 +11,7 @@ export async function login(req: Request, res: Response) {
   }
   try {
     const user = await usersRepository.findUserByEmail(email);
-    if (!user || !user.senha) {
+    if (!user) {
       return res.status(401).json({ error: "Usuário ou senha inválidos" });
     }
     const senhaOk = await bcrypt.compare(senha, user.senha);

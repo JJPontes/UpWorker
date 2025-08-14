@@ -6,6 +6,7 @@ import {
 
 export async function listarChamados(req: Request, res: Response) {
   const { status, solicitante, dataInicio, dataFim, page = "1", pageSize = "10" } = req.query;
+  
   try {
     const chamados = await findAllCalleds({
       status: status as string,

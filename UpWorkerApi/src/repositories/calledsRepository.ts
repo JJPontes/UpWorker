@@ -4,6 +4,7 @@ import pool from "../db";
 export async function findAllCalleds(params: {
   status?: string;
   solicitante?: string;
+  tipoChamado?: string;
   dataInicio?: string;
   dataFim?: string;
   page?: number;
@@ -12,29 +13,52 @@ export async function findAllCalleds(params: {
   let query = `SELECT c.*, u.nome as nameUser, u.id as userId FROM calleds c JOIN users u ON c.solicitante = u.id`;
   const queryParams: any[] = [];
   const where: string[] = [];
+
+  // Filtro por status (case-insensitive)
   if (params.status) {
-    queryParams.push(params.status);
-    where.push(`status = $${queryParams.length}`);
+    queryParams.push(params.status.toLowerCase());
+    where.push(`LOWER(c.status) = $${queryParams.length}`);
   }
+
+  // Filtro por solicitante (nome)
   if (params.solicitante) {
-    queryParams.push(params.solicitante);
-    where.push(`solicitante = $${queryParams.length}`);
+    const userResult = await pool.query("SELECT id FROM users WHERE nome = $1", [params.solicitante]);
+    if (userResult.rows.length === 0) {
+      return [];
+    }
+    const solicitanteId = userResult.rows[0].id;
+    queryParams.push(solicitanteId);
+    where.push(`c.solicitante = $${queryParams.length}`);
   }
-  if (params.dataInicio && params.dataFim) {
+
+  // Filtro por tipoChamado (categoria)
+  if (params.tipoChamado) {
+    queryParams.push(params.tipoChamado);
+    where.push(`c.tipo_chamado = $${queryParams.length}`);
+  }
+
+  // Filtro por intervalo de datas (criado_em)
+  if (params.dataInicio) {
     queryParams.push(params.dataInicio);
-    where.push(`criado_em >= $${queryParams.length}`);
-    queryParams.push(params.dataFim);
-    where.push(`criado_em <= $${queryParams.length}`);
+    where.push(`DATE(c.criado_em) >= $${queryParams.length}`);
   }
+  if (params.dataFim) {
+    queryParams.push(params.dataFim);
+    where.push(`DATE(c.criado_em) <= $${queryParams.length}`);
+  }
+
   if (where.length) {
     query += " WHERE " + where.join(" AND ");
   }
-  query += " ORDER BY id";
+  query += " ORDER BY c.id";
+
+  // Paginação
   const pageNum = Math.max(1, params.page || 1);
   const pageSizeNum = Math.max(1, params.pageSize || 10);
   const offset = (pageNum - 1) * pageSizeNum;
   query += ` LIMIT $${queryParams.length + 1} OFFSET $${queryParams.length + 2}`;
   queryParams.push(pageSizeNum, offset);
+
   const result = await pool.query(query, queryParams);
   return result.rows.map((row) => ({
     ...row,

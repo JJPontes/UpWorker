@@ -120,7 +120,6 @@ export default function CreateCalledPage() {
       for (let pair of formData.entries()) {
         fdObj[pair[0]] = pair[1];
       }
-      console.log("FormData enviado:", fdObj);
 
       const response = await api.post("/calleds", formData);
   const { id, uuid } = response.data;

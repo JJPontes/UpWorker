@@ -27,7 +27,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import CloseIcon from "@mui/icons-material/Close";
 
 import MuiRangePicker from "../../components/DateRange/MuiRangePicker";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import jsPDF from "jspdf";
 
 // Helpers
@@ -58,9 +58,10 @@ const CalledsListPage: React.FC = () => {
   const [openToast, setOpenToast] = useState(false);
   const [statusFiltro, setStatusFiltro] = useState("");
   const [solicitanteFiltro, setSolicitanteFiltro] = useState("");
+  // Inicializa o filtro de data para os últimos 7 dias
   const [dataFiltro, setDataFiltro] = useState<[Dayjs | null, Dayjs | null]>([
-    null,
-    null,
+    dayjs().subtract(7, "day"),
+    dayjs(),
   ]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -103,16 +104,21 @@ const CalledsListPage: React.FC = () => {
     if (solicitanteFiltro) params.solicitante = solicitanteFiltro;
     if (dataFiltro[0]) params.dataInicio = dataFiltro[0].format("YYYY-MM-DD");
     if (dataFiltro[1]) params.dataFim = dataFiltro[1].format("YYYY-MM-DD");
-
+    
     api
-      .get("/calleds", { params })
+      .get(`/calleds?${new URLSearchParams(params).toString()}`)
       .then((response) => {
         const data = response.data.data || response.data;
         const chamados = Array.isArray(data) ? mapChamados(data) : [];
         setCalleds(chamados);
       })
-        .catch(() => {
-          setErro(response.data.error || "Erro ao buscar chamados.");
+      .catch((error) => {
+        console.error("API error:", error);
+        setErro(
+          error?.response?.data?.error ||
+          error?.message ||
+          "Erro ao buscar chamados."
+        );
       })
       .finally(() => {
         setLoading(false);
@@ -120,9 +126,7 @@ const CalledsListPage: React.FC = () => {
   });
 };
 
-  useEffect(() => {
-    fetchCalleds();
-  }, []);
+  // Removido o fetch automático ao mudar filtros. Agora só busca ao clicar em "Aplicar filtro".
 
   useEffect(() => {
     if (erro) setOpenToast(true);
