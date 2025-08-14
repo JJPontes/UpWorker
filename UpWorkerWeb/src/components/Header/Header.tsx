@@ -77,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ onToggleTheme, mode }) => {
       ];
 
   return (
-    <AppBar position="static" color="default" sx={{ mb: 2 }}>
+  <AppBar position="sticky" color="default" sx={{ mb: 2, top: 0, zIndex: 1200 }}>
       <Toolbar>
         {isMobile ? (
           <>

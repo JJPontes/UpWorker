@@ -196,7 +196,14 @@ const CalledsListPage: React.FC = () => {
       </Typography>
       {/* Filtro desktop */}
       {!isMobile && (
-        <Paper elevation={2} sx={{ p: 2, mb: 2 }}>
+        <Paper elevation={2} sx={{
+          p: 2,
+          mb: 2,
+          position: 'sticky',
+          top: 0,
+          zIndex: 1100,
+          background: '#fff',
+        }}>
           <Box display="flex" alignItems="center" mb={2}>
             <Typography variant="h6">Filtrar Chamados</Typography>
           </Box>
