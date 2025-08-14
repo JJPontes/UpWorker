@@ -4,6 +4,22 @@
 
 Este documento descreve a arquitetura backend implementada no projeto UpWorker.
 
+## Testes Automatizados
+
+- Todos os testes do backend estão em `src/__tests__`, separados por tipo (controller, repository, middleware, model, utils).
+- Sempre use mocks para dependências externas e banco de dados.
+- Para rodar os testes:
+	```bash
+	npm test
+	```
+
+- Exemplo de mock de pool do PostgreSQL:
+	```js
+	jest.mock('../db', () => ({ default: { query: jest.fn() } }));
+	```
+
+- Recomenda-se configurar coverage com Jest.
+
 ## Tecnologias Utilizadas
 
 - **Linguagem/Framework:** Node.js com Express (TypeScript)

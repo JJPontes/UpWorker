@@ -5,18 +5,20 @@ import {
 } from "../repositories/calledsRepository";
 
 export async function listarChamados(req: Request, res: Response) {
-  const { status, solicitante, page = "1", pageSize = "10" } = req.query;
+  const { status, solicitante, dataInicio, dataFim, page = "1", pageSize = "10" } = req.query;
   try {
     const chamados = await findAllCalleds({
       status: status as string,
       solicitante: solicitante as string,
+      dataInicio: dataInicio as string,
+      dataFim: dataFim as string,
       page: parseInt(page as string, 10),
-      pageSize: parseInt(page as string, 10),
+      pageSize: parseInt(pageSize as string, 10),
     });
-    res.json(chamados);
+  res.json({ data: chamados });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ erro: "Erro ao listar chamados." });
+  res.status(500).json({ error: "Erro ao listar chamados." });
   }
 }
 
@@ -24,10 +26,10 @@ export async function buscarChamadoPorId(req: Request, res: Response) {
   try {
     const chamado = await findCalledById(Number(req.params.id));
     if (!chamado)
-      return res.status(404).json({ erro: "Chamado não encontrado." });
-    res.json(chamado);
+  return res.status(404).json({ error: "Chamado não encontrado." });
+  res.json({ data: chamado });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ erro: "Erro ao buscar chamado." });
+  res.status(500).json({ error: "Erro ao buscar chamado." });
   }
 }

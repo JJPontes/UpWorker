@@ -4,6 +4,22 @@
 
 Este documento descreve a arquitetura frontend implementada no projeto UpWorker.
 
+## Testes Automatizados
+
+- Recomenda-se Jest + React Testing Library para componentes.
+- Separe os testes por pasta conforme o tipo de componente ou página.
+- Use mocks para chamadas à API nos testes de frontend.
+- Exemplo de mock:
+	```js
+	jest.mock('axios');
+	import axios from 'axios';
+	axios.get.mockResolvedValue({ data: { ... } });
+	```
+- Para rodar os testes:
+	```bash
+	npm test
+	```
+
 ## Tecnologias Utilizadas
 
 - **Framework:** React 18

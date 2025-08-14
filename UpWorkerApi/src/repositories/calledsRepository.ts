@@ -4,6 +4,8 @@ import pool from "../db";
 export async function findAllCalleds(params: {
   status?: string;
   solicitante?: string;
+  dataInicio?: string;
+  dataFim?: string;
   page?: number;
   pageSize?: number;
 }) {
@@ -17,6 +19,12 @@ export async function findAllCalleds(params: {
   if (params.solicitante) {
     queryParams.push(params.solicitante);
     where.push(`solicitante = $${queryParams.length}`);
+  }
+  if (params.dataInicio && params.dataFim) {
+    queryParams.push(params.dataInicio);
+    where.push(`criado_em >= $${queryParams.length}`);
+    queryParams.push(params.dataFim);
+    where.push(`criado_em <= $${queryParams.length}`);
   }
   if (where.length) {
     query += " WHERE " + where.join(" AND ");

@@ -4,6 +4,15 @@
 
 As aplicações do projeto (exceto o frontend) são executadas via Docker Compose.
 
+## Testes Automatizados
+
+- Todos os serviços backend possuem testes automatizados.
+- Os testes não acessam o banco real, sempre usam mocks.
+- Para rodar os testes:
+	```bash
+	npm test
+	```
+
 
 ## Serviços Orquestrados
 

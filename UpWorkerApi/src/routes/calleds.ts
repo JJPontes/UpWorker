@@ -5,7 +5,7 @@
  * /api/calleds:
  *   get:
  *     summary: Listar chamados
- *     description: Lista todos os chamados, com filtros opcionais por status e solicitante.
+ *     description: Lista todos os chamados, com filtros opcionais por status, solicitante e intervalo de datas.
  *     parameters:
  *       - in: query
  *         name: status
@@ -17,6 +17,18 @@
  *         schema:
  *           type: string
  *         description: Filtrar por solicitante
+ *       - in: query
+ *         name: dataInicio
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: Data inicial (YYYY-MM-DD) para filtrar chamados criados a partir desta data
+ *       - in: query
+ *         name: dataFim
+ *         schema:
+ *           type: string
+ *           format: date
+ *         description: Data final (YYYY-MM-DD) para filtrar chamados criados até esta data
  *     responses:
  *       200:
  *         description: Lista de chamados

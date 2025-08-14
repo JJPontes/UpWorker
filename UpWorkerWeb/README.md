@@ -1,6 +1,35 @@
 # UpWorker Web
 
 Frontend React 18 + Vite + MUI para o sistema UpWorker.
+## Testes Automatizados
+
+- Recomenda-se usar Jest + React Testing Library para componentes.
+- Separe os testes por pasta conforme o tipo de componente ou página.
+- Use mocks para chamadas à API nos testes de frontend.
+- Mantenha os testes automatizados sempre atualizados conforme as melhorias do backend.
+- Para rodar os testes:
+ - Sempre utilize mocks para chamadas HTTP e dados externos, evitando dependências reais.
+ - Recomenda-se configurar coverage (cobertura) com Jest para garantir qualidade.
+ - Exemplo de mock de chamada à API:
+	 ```js
+	 jest.mock('axios');
+	 import axios from 'axios';
+	 axios.get.mockResolvedValue({ data: { ... } });
+	 ```
+ - Para rodar os testes:
+	 ```bash
+	 npm test
+	 ```
+
+## Estrutura de Pastas de Testes
+```
+UpWorkerWeb/
+	src/
+		components/
+		pages/
+		api/
+		__tests__/
+```
 
 ## Principais Recursos
 

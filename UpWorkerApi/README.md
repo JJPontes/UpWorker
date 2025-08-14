@@ -1,6 +1,47 @@
 # UpWorker API
 
 Backend Node.js/Express/TypeScript para o sistema UpWorker.
+## Testes Automatizados
+
+- Todos os testes estão organizados em `src/__tests__` por tipo:
+	- `controller/` para controllers
+	- `repository/` para repositories
+	- `middlewares/` para middlewares
+	- `models/` para models
+	- `utils/` para utilitários
+- Todos os testes usam mocks, sem acesso ao banco real.
+- Para rodar os testes:
+	```bash
+	npm test
+	```
+
+## Estrutura de Pastas
+
+```
+UpWorkerApi/
+	src/
+		controllers/
+		repositories/
+		middlewares/
+		models/
+		utils/
+		__tests__/
+			controller/
+			repository/
+			middlewares/
+			models/
+			utils/
+```
+
+## Boas práticas
+- Nunca acesse o banco real nos testes, sempre use mock.
+- Separe os testes por pasta conforme o tipo.
+- Use Jest + Supertest para testes de API.
+
+## Exemplo de comando
+```bash
+npm test
+```
 
 ## Principais Recursos
 
