@@ -118,7 +118,7 @@ router.post(
       ) {
         return res
           .status(400)
-          .json({ erro: "Campos obrigatórios ausentes.", request: req.body });
+          .json({ error: "Campos obrigatórios ausentes.", request: req.body });
       }
 
       // Validação de descrição de bug
@@ -126,7 +126,7 @@ router.post(
         const avaliacao = avaliarDescricaoBug(script);
         if (!avaliacao.ok) {
           return res.status(400).json({
-            erro: "Descrição insuficiente para chamado de bug.",
+            error: "Descrição insuficiente para chamado de bug.",
             sugestao: avaliacao.sugestao,
           });
         }
@@ -167,12 +167,12 @@ router.post(
             : String(err);
         return res
           .status(500)
-          .json({ erro: "Erro ao gravar chamado.", detalhes: errMsg });
+          .json({ error: "Erro ao gravar chamado.", detalhes: errMsg });
       }
     } catch (err: any) {
       console.error("Erro interno no POST /api/calleds:", err);
       return res.status(500).json({
-        erro: "Erro interno do servidor.",
+        error: "Erro interno do servidor.",
         detalhes: err?.message || err,
       });
     }
@@ -201,7 +201,7 @@ router.post(
 router.post("/:id/aprovar", async (req: Request, res: Response) => {
   const perfil = req.headers["x-perfil"] || "";
   if (perfil !== "Analista") {
-    return res.status(403).json({ erro: "Apenas Analista pode aprovar." });
+    return res.status(403).json({ error: "Apenas Analista pode aprovar." });
   }
   try {
     // Busca chamado
@@ -211,11 +211,11 @@ router.post("/:id/aprovar", async (req: Request, res: Response) => {
     );
     const called = result.rows[0];
     if (!called)
-      return res.status(404).json({ erro: "Chamado não encontrado." });
+      return res.status(404).json({ error: "Chamado não encontrado." });
     if (called.status !== "Aprovacao" && called.status !== "Criacao") {
       return res
         .status(400)
-        .json({ erro: "Chamado não está em etapa de aprovação." });
+        .json({ error: "Chamado não está em etapa de aprovação." });
     }
     // Atualiza status
     const upd = await pool.query(
@@ -228,7 +228,7 @@ router.post("/:id/aprovar", async (req: Request, res: Response) => {
     res.json(upd.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ erro: "Erro ao aprovar chamado." });
+  res.status(500).json({ error: "Erro ao aprovar chamado." });
   }
 });
 
@@ -257,7 +257,7 @@ router.post("/:id/revisar", async (req: Request, res: Response) => {
   if (perfil !== "Analista") {
     return res
       .status(403)
-      .json({ erro: "Apenas Analista pode devolver para revisão." });
+      .json({ error: "Apenas Analista pode devolver para revisão." });
   }
   try {
     const result = await pool.query(
@@ -266,11 +266,11 @@ router.post("/:id/revisar", async (req: Request, res: Response) => {
     );
     const called = result.rows[0];
     if (!called)
-      return res.status(404).json({ erro: "Chamado não encontrado." });
+      return res.status(404).json({ error: "Chamado não encontrado." });
     if (called.status !== "Aprovacao") {
       return res
         .status(400)
-        .json({ erro: "Chamado não está em etapa de aprovação." });
+        .json({ error: "Chamado não está em etapa de aprovação." });
     }
     const upd = await pool.query(
       "UPDATE calleds SET status = $1 WHERE id = $2::int RETURNING *",
@@ -282,7 +282,7 @@ router.post("/:id/revisar", async (req: Request, res: Response) => {
     res.json(upd.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ erro: "Erro ao devolver chamado para revisão." });
+  res.status(500).json({ error: "Erro ao devolver chamado para revisão." });
   }
 });
 
@@ -309,7 +309,7 @@ router.post("/:id/revisar", async (req: Request, res: Response) => {
 router.post("/:id/reprovar", async (req: Request, res: Response) => {
   const perfil = req.headers["x-perfil"] || "";
   if (perfil !== "Analista") {
-    return res.status(403).json({ erro: "Apenas Analista pode reprovar." });
+    return res.status(403).json({ error: "Apenas Analista pode reprovar." });
   }
   try {
     const result = await pool.query(
@@ -318,11 +318,11 @@ router.post("/:id/reprovar", async (req: Request, res: Response) => {
     );
     const called = result.rows[0];
     if (!called)
-      return res.status(404).json({ erro: "Chamado não encontrado." });
+      return res.status(404).json({ error: "Chamado não encontrado." });
     if (called.status !== "Aprovacao") {
       return res
         .status(400)
-        .json({ erro: "Chamado não está em etapa de aprovação." });
+        .json({ error: "Chamado não está em etapa de aprovação." });
     }
     const upd = await pool.query(
       "UPDATE calleds SET status = $1 WHERE id = $2::int RETURNING *",
@@ -334,7 +334,7 @@ router.post("/:id/reprovar", async (req: Request, res: Response) => {
     res.json(upd.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ erro: "Erro ao reprovar chamado." });
+  res.status(500).json({ error: "Erro ao reprovar chamado." });
   }
 });
 
@@ -361,7 +361,7 @@ router.post("/:id/reprovar", async (req: Request, res: Response) => {
 router.post("/:id/agendar", async (req: Request, res: Response) => {
   const perfil = req.headers["x-perfil"] || "";
   if (perfil !== "Analista") {
-    return res.status(403).json({ erro: "Apenas Analista pode agendar." });
+    return res.status(403).json({ error: "Apenas Analista pode agendar." });
   }
   try {
     const result = await pool.query(
@@ -370,11 +370,11 @@ router.post("/:id/agendar", async (req: Request, res: Response) => {
     );
     const called = result.rows[0];
     if (!called)
-      return res.status(404).json({ erro: "Chamado não encontrado." });
+      return res.status(404).json({ error: "Chamado não encontrado." });
     if (called.status !== "Aprovacao") {
       return res
         .status(400)
-        .json({ erro: "Chamado não está em etapa de aprovação." });
+        .json({ error: "Chamado não está em etapa de aprovação." });
     }
     const upd = await pool.query(
       "UPDATE calleds SET status = $1 WHERE id = $2::uuid RETURNING *",
@@ -386,7 +386,7 @@ router.post("/:id/agendar", async (req: Request, res: Response) => {
     res.json(upd.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ erro: "Erro ao agendar chamado." });
+  res.status(500).json({ error: "Erro ao agendar chamado." });
   }
 });
 
@@ -413,7 +413,7 @@ router.post("/:id/agendar", async (req: Request, res: Response) => {
 router.post("/:id/executar", async (req: Request, res: Response) => {
   const perfil = req.headers["x-perfil"] || "";
   if (perfil !== "Executor") {
-    return res.status(403).json({ erro: "Apenas Executor pode executar." });
+    return res.status(403).json({ error: "Apenas Executor pode executar." });
   }
   try {
     const result = await pool.query(
@@ -422,11 +422,11 @@ router.post("/:id/executar", async (req: Request, res: Response) => {
     );
     const called = result.rows[0];
     if (!called)
-      return res.status(404).json({ erro: "Chamado não encontrado." });
+      return res.status(404).json({ error: "Chamado não encontrado." });
     if (called.status !== "Agendamento") {
       return res
         .status(400)
-        .json({ erro: "Chamado não está em etapa de agendamento." });
+        .json({ error: "Chamado não está em etapa de agendamento." });
     }
     const upd = await pool.query(
       "UPDATE calleds SET status = $1 WHERE id = $2::int RETURNING *",
@@ -438,7 +438,7 @@ router.post("/:id/executar", async (req: Request, res: Response) => {
     res.json(upd.rows[0]);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ erro: "Erro ao executar chamado." });
+  res.status(500).json({ error: "Erro ao executar chamado." });
   }
 });
 

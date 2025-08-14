@@ -164,9 +164,9 @@ export default function CreateCalledPage() {
       setScript("");
       setAnexo(null);
       setEmergencial(false);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Erro ao criar o chamado:", err);
-      setErro("Erro ao criar o chamado. Tente novamente mais tarde.");
+      setErro(err?.response?.data?.error || "Erro ao criar o chamado. Tente novamente mais tarde.");
     }
   };
 

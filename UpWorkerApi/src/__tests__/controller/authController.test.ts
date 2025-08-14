@@ -42,14 +42,15 @@ describe('Auth API', () => {
   });
 
   it('POST /auth/login - sucesso', async () => {
-  const bcrypt = require('bcryptjs');
-  const senhaHash = await bcrypt.hash('123', 10);
-  (usersRepository.findUserByEmail as jest.Mock).mockResolvedValue({ id: 1, email: 'user@email.com', senha: senhaHash, nome: 'Usuário', perfil: 'user' });
+    const bcrypt = require('bcryptjs');
+    const senhaHash = await bcrypt.hash('123', 10);
+    (usersRepository.findUserByEmail as jest.Mock).mockResolvedValue({ id: 1, email: 'user@email.com', senha: senhaHash, nome: 'Usuário', perfil: 'user' });
     const res = await request(app)
       .post('/auth/login')
       .send({ email: 'user@email.com', senha: '123' });
     expect(res.status).toBe(200);
-    expect(res.body.data).toBeDefined();
+    expect(res.body.token).toBeDefined();
+    expect(res.body.nome).toBeDefined();
     expect(usersRepository.findUserByEmail).toHaveBeenCalledWith('user@email.com');
   });
 

@@ -111,8 +111,8 @@ const CalledsListPage: React.FC = () => {
         const chamados = Array.isArray(data) ? mapChamados(data) : [];
         setCalleds(chamados);
       })
-      .catch(() => {
-        setErro("Erro ao buscar chamados.");
+        .catch(() => {
+          setErro(response.data.error || "Erro ao buscar chamados.");
       })
       .finally(() => {
         setLoading(false);

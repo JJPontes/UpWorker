@@ -19,7 +19,7 @@ export default function LoginPage() {
       window.location.href = "/calleds";
     } catch (err: any) {
       console.error("Login error:", err);
-      setErro("Usuário ou senha inválidos");
+      setErro(err?.response?.data?.error || "Usuário ou senha inválidos");
     }
   };
 

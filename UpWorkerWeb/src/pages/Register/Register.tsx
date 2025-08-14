@@ -29,9 +29,9 @@ export default function RegisterPage() {
       setTimeout(() => {
         window.location.href = "/login";
       }, 1500);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Erro ao cadastrar usuário:", err);
-      setErro("Erro ao cadastrar usuário");
+      setErro(err?.response?.data?.error || "Erro ao cadastrar usuário");
     }
   };
 

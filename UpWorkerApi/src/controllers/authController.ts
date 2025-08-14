@@ -7,23 +7,26 @@ import * as usersRepository from "../repositories/usersRepository";
 export async function login(req: Request, res: Response) {
   const { email, senha } = req.body;
   if (!email || !senha) {
-  return res.status(400).json({ error: "Cadastro incompleto." });
+    return res.status(400).json({ error: "Usuário ou senha inválidos" });
   }
   try {
     const user = await usersRepository.findUserByEmail(email);
-  if (!user) return res.status(401).json({ error: "Credenciais inválidas." });
+    if (!user || !user.senha) {
+      return res.status(401).json({ error: "Usuário ou senha inválidos" });
+    }
     const senhaOk = await bcrypt.compare(senha, user.senha);
-    if (!senhaOk)
-      return res.status(401).json({ error: "Credenciais inválidas." });
+    if (!senhaOk) {
+      return res.status(401).json({ error: "Usuário ou senha inválidos" });
+    }
     const token = jwt.sign(
       { id: user.id, nome: user.nome, perfil: user.perfil },
       process.env.JWT_SECRET || "changeme",
       { expiresIn: "1d" },
     );
-    res.status(200).json({ data: { token, nome: user.nome } });
+    res.status(200).json({ token, nome: user.nome });
   } catch (err) {
     console.error(err);
-  res.status(500).json({ error: "Erro interno." });
+    res.status(500).json({ error: "Erro interno." });
   }
 }
 

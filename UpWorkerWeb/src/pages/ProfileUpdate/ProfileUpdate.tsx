@@ -29,6 +29,7 @@ export default function ProfileUpdate() {
     } catch (err: any) {
       console.error("Erro ao atualizar nome:", err);
       setErro(
+        err?.response?.data?.error ||
         err?.response?.data?.message ||
         "Erro ao atualizar nome. Tente novamente mais tarde."
       );
