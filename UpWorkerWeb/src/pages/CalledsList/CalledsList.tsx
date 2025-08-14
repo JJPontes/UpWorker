@@ -76,7 +76,8 @@ const CalledsListPage: React.FC = () => {
     return data.map((item) => ({
       id: Number(item.id), // int PK
       uuid: item.uuid, // UUID
-      titulo: item.tipo_chamado,
+      titulo: item.titulo,
+      tipoChamado: item.tipo_chamado,
       descricao: item.script,
       status: item.status,
       criadoEm: item.criado_em,
@@ -153,13 +154,14 @@ const CalledsListPage: React.FC = () => {
     doc.text(`Descrição: ${called.descricao || "-"}`, 20, 40);
     doc.text(`Status: ${called.status || "-"}`, 20, 48);
     // Mostra apenas o nome do solicitante
+    console.log("called.solicitante",called);
     let nomeSolicitante = "-";
     if (
       called.solicitante &&
       typeof called.solicitante === "object" &&
-      called.solicitante.nameUser
+      called.solicitante.name
     ) {
-      nomeSolicitante = called.solicitante.nameUser;
+      nomeSolicitante = called.solicitante.name;
     } else if (typeof called.solicitante === "string") {
       nomeSolicitante = called.solicitante;
     }
@@ -177,8 +179,8 @@ const CalledsListPage: React.FC = () => {
     // Usa o título do chamado como nome do arquivo
     // Remove todos os caracteres especiais, deixando apenas letras, números, hífen e underline
     let tituloArquivo = "Chamado";
-    if (called.titulo) {
-      tituloArquivo = called.titulo
+    if (called.id) {
+      tituloArquivo = `Chamado_${called.id}`
         .normalize("NFD")
         .replace(/[^\w-]+/g, "_") // remove tudo que não for letra, número, hífen ou underline
         .replace(/_+/g, "_") // substitui múltiplos _ por um só
