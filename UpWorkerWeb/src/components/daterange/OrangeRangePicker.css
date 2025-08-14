@@ -1,0 +1,164 @@
+/* Suporte a modo claro e escuro */
+@media (prefers-color-scheme: dark) {
+  .orange-range-picker .ant-picker-panel {
+    background: #181818;
+    border-color: #ff9800;
+    color: #fff;
+    border-radius: 8px;
+  }
+  .orange-range-picker .ant-picker-header {
+    color: #ff9800;
+    font-weight: bold;
+  }
+  .orange-range-picker .ant-picker-cell-selected .ant-picker-cell-inner,
+  .orange-range-picker .ant-picker-cell-range-start .ant-picker-cell-inner,
+  .orange-range-picker .ant-picker-cell-range-end .ant-picker-cell-inner {
+    background: #ff9800;
+    color: #181818;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.15);
+  }
+  .orange-range-picker .ant-picker-cell-in-range .ant-picker-cell-inner {
+    background: #3d2c00;
+    color: #ff9800;
+    border-radius: 6px;
+  }
+  .orange-range-picker .ant-picker-cell-in-range:hover .ant-picker-cell-inner,
+  .orange-range-picker
+    .ant-picker-cell-range-hover:hover
+    .ant-picker-cell-inner {
+    background: #4e3200;
+    color: #ff9800;
+    box-shadow: 0 2px 8px rgba(255, 152, 0, 0.1);
+  }
+  .orange-range-picker .ant-picker-suffix .anticon {
+    color: #ff9800;
+  }
+  .orange-range-picker .ant-picker-dropdown {
+    background: #181818;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Dias selecionados e início/fim do range com fundo laranja forte + animação */
+.ant-picker-cell-selected .ant-picker-cell-inner,
+.ant-picker-cell-range-start .ant-picker-cell-inner,
+.ant-picker-cell-range-end .ant-picker-cell-inner {
+  background: #ff9800;
+  color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.15);
+  transition:
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+}
+
+/* Dias dentro do range com laranja suave + animação */
+.ant-picker-cell-in-range .ant-picker-cell-inner {
+  background: #fff3e0;
+  color: #ff9800;
+  border-radius: 6px;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+/* Hover nos dias do range + animação */
+.ant-picker-cell-in-range:hover .ant-picker-cell-inner,
+.ant-picker-cell-range-hover:hover .ant-picker-cell-inner {
+  background: #ffe0b2;
+  color: #ff9800;
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.1);
+  transition:
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+}
+/* Botão limpar dentro do popup do calendário */
+.orange-range-picker .ant-picker-clear {
+  color: #ff9800;
+  background: #fff3e0;
+  border-radius: 50%;
+  padding: 2px;
+  margin-left: 8px;
+  transition: background 0.2s;
+}
+.orange-range-picker .ant-picker-clear:hover {
+  background: #ffe0b2;
+}
+/* Tooltip nas datas (simulação, depende do JS) */
+.ant-picker-cell-inner[title] {
+  position: relative;
+}
+.ant-picker-cell-inner[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff9800;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  white-space: nowrap;
+  z-index: 10;
+}
+/* Responsividade: fonte e botões maiores em telas pequenas */
+@media (max-width: 600px) {
+  .orange-range-picker .ant-picker-panel {
+    font-size: 1.1em;
+  }
+  .orange-range-picker .ant-picker-header {
+    font-size: 1.2em;
+  }
+  .orange-range-picker .ant-picker-cell-inner {
+    min-width: 32px;
+    min-height: 32px;
+  }
+}
+/* Validação visual: campo inválido */
+.orange-range-picker .ant-picker-input.ant-picker-input-invalid {
+  border: 2px solid #d32f2f !important;
+  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.15);
+}
+/* Resumo do range selecionado (deve ser implementado no JS/TSX) */
+.orange-range-picker-summary {
+  margin-top: 4px;
+  color: #ff9800;
+  font-weight: bold;
+  font-size: 0.95em;
+}
+
+/* Borda do painel do calendário */
+.ant-picker-panel {
+  border-color: #ff9800;
+  border-radius: 8px;
+}
+
+/* Header e ícones do calendário */
+.ant-picker-header {
+  color: #ff9800;
+  font-weight: bold;
+}
+.ant-picker-header .ant-picker-prev-icon,
+.ant-picker-header .ant-picker-next-icon,
+.ant-picker-header .ant-picker-super-prev-icon,
+.ant-picker-header .ant-picker-super-next-icon {
+  color: #ff9800;
+}
+
+/* Ícone do calendário laranja */
+.ant-picker-suffix .anticon {
+  color: #ff9800;
+}
+
+/* Centraliza o popup do calendário do antd na tela */
+.ant-picker-dropdown {
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999 !important;
+}

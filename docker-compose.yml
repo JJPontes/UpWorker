@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+  api:
+    build: ./UpWorkerApi
+    ports:
+      - "3010:3010"
+    environment:
+      - NODE_ENV=development
+      - JWT_SECRET=changeme
+      - DB_HOST=db
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=upworker
+    depends_on:
+      - db
+    networks:
+      - upworker-net
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: upworker
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./database/scripts/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+    networks:
+      - upworker-net
+volumes:
+  db_data:
+networks:
+  upworker-net:
+    driver: bridge
