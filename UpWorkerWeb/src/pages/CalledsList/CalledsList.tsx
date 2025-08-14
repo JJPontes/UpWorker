@@ -73,12 +73,11 @@ const CalledsListPage: React.FC = () => {
   // Função para mapear os chamados
   function mapChamados(data: any[]): any[] {
     return data.map((item) => ({
-      id: item.id,
-      uuid: item.uuid,
+      id: Number(item.id), // int PK
+      uuid: item.uuid, // UUID
       titulo: item.tipo_chamado,
       descricao: item.script,
       status: item.status,
-      solicitante: item.solicitante,
       criadoEm: item.criado_em,
       dataExecucao: item.data_execucao,
       ambiente: item.ambiente,
@@ -90,28 +89,36 @@ const CalledsListPage: React.FC = () => {
       anexo: item.anexo,
       anexoNome: item.anexo_nome,
       anexoTipo: item.anexo_tipo,
+      solicitante: item.solicitante,
     }));
   }
 
   // Simulação de fetch
   const fetchCalleds = () => {
-    setLoading(true);
-    import( "../../api/index").then(({ default: api }) => {
-      api
-        .get("/calleds")
-        .then((response) => {
-          const data = response.data.data || response.data;
-          const chamados = Array.isArray(data) ? mapChamados(data) : [];
-          setCalleds(chamados);
-        })
-        .catch(() => {
-          setErro("Erro ao buscar chamados.");
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    });
-  };
+  setLoading(true);
+  import("../../api/index").then(({ default: api }) => {
+    // Monta os parâmetros de filtro
+    const params: any = {};
+    if (statusFiltro) params.status = statusFiltro;
+    if (solicitanteFiltro) params.solicitante = solicitanteFiltro;
+    if (dataFiltro[0]) params.dataInicio = dataFiltro[0].format("YYYY-MM-DD");
+    if (dataFiltro[1]) params.dataFim = dataFiltro[1].format("YYYY-MM-DD");
+
+    api
+      .get("/calleds", { params })
+      .then((response) => {
+        const data = response.data.data || response.data;
+        const chamados = Array.isArray(data) ? mapChamados(data) : [];
+        setCalleds(chamados);
+      })
+      .catch(() => {
+        setErro("Erro ao buscar chamados.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  });
+};
 
   useEffect(() => {
     fetchCalleds();
@@ -303,9 +310,9 @@ const CalledsListPage: React.FC = () => {
           ) : (
             calleds.map((c) => {
               const nomeSolicitante =
-                c.solicitante && c.solicitante.nameUser
-                  ? c.solicitante.nameUser.charAt(0).toUpperCase() +
-                    c.solicitante.nameUser.slice(1)
+                c.solicitante && c.solicitante.name
+                  ? c.solicitante.name.charAt(0).toUpperCase() +
+                    c.solicitante.name.slice(1)
                   : "-";
               const descricaoMobile =
                 isMobile && c.descricao && c.descricao.length > 30

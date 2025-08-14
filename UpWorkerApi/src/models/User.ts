@@ -3,5 +3,5 @@ export interface User {
   nome: string;
   email: string;
   senha: string; // hash em produção
-  perfil: 'Analista' | 'Executor';
+  perfil: "Analista" | "Executor";
 }

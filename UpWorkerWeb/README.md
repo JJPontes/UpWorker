@@ -21,8 +21,8 @@ Frontend React 18 + Vite + MUI para o sistema UpWorker.
 
 ## Integração com Backend
 
-- Proxy Vite redireciona `/api` para backend (`localhost:3010`)
-- Fallback automático para múltiplas portas (3005/3010)
+- Proxy Vite redireciona `/api` para backend (`http://localhost:3010`)
+- Fallback automático para múltiplas portas (3005/3010) já inclui o prefixo `/api`
 
 ## Estrutura
 

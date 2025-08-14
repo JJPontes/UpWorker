@@ -1,12 +1,11 @@
-
-import { Router } from 'express';
-import { criarUsuario, listarUsuarios } from '../controllers/usersController';
+import { Router } from "express";
+import { criarUsuario, listarUsuarios } from "../controllers/usersController";
 
 const router = Router();
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *   post:
  *     summary: Cadastro de usuário
  *     description: Cria um novo usuário.
@@ -33,12 +32,6 @@ const router = Router();
  *         description: Campos obrigatórios ausentes
  *       409:
  *         description: E-mail já cadastrado
- */
-router.post('/', criarUsuario);
-
-/**
- * @swagger
- * /users:
  *   get:
  *     summary: Listar usuários
  *     description: Retorna todos os usuários cadastrados (sem senha).
@@ -46,6 +39,7 @@ router.post('/', criarUsuario);
  *       200:
  *         description: Lista de usuários
  */
-router.get('/', listarUsuarios);
+router.post("/", criarUsuario);
+router.get("/", listarUsuarios);
 
 export default router;

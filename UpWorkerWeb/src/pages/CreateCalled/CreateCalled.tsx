@@ -123,7 +123,9 @@ export default function CreateCalledPage() {
       console.log("FormData enviado:", fdObj);
 
       const response = await api.post("/calleds", formData);
-      const { id, uuid } = response.data;
+  const { id, uuid } = response.data;
+  // Garante que id é number
+
       setSucesso(`Solicitação criada com sucesso!`);
       setOpenToast(true);
 

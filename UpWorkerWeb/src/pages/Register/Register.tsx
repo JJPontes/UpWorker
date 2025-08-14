@@ -9,7 +9,7 @@ import {
   Paper,
   MenuItem,
 } from "@mui/material";
-import api from "../../api";
+import api from "../../api/index";
 
 export default function RegisterPage() {
   const [nome, setNome] = useState("");
@@ -24,7 +24,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setErro("");
     try {
-      await api.post("/users", { nome, email, senha, perfil });
+  await api.post("/users", { nome, email, senha, perfil });
       setOpenSnackbar(true);
       setTimeout(() => {
         window.location.href = "/login";

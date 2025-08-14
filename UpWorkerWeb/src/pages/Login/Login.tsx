@@ -11,7 +11,7 @@ export default function LoginPage() {
     e.preventDefault();
     setErro("");
     try {
-      const resp = await api.post("/auth/login", { email, senha });
+  const resp = await api.post("/auth/login", { email, senha });
       localStorage.setItem("token", resp.data.token);
       // Salva o nome do usuário no localStorage
       const userName = resp.data.nome;

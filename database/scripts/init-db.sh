@@ -3,12 +3,12 @@
 # Script de inicialização para criar tabelas do UpWorker automaticamente
 set -e
 
+
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<EOSQL
 -- Criação da extensão para UUID
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TYPE status_called AS ENUM ('Criacao', 'Aprovacao', 'Agendamento', 'Execucao', 'Em Revisao', 'Reprovado');
-
 
 -- Tabela de usuários
 CREATE TABLE IF NOT EXISTS users (
@@ -22,8 +22,9 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Tabela de chamados
 CREATE TABLE IF NOT EXISTS calleds (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    uuid VARCHAR(36) NOT NULL,
+    id SERIAL PRIMARY KEY,
+    uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
+    titulo VARCHAR(200) NOT NULL,
     tipo_chamado VARCHAR(20) NOT NULL,
     tipo_mudanca VARCHAR(30) NOT NULL,
     ambiente VARCHAR(20),
@@ -70,8 +71,6 @@ CREATE TABLE IF NOT EXISTS attachments (
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     nome_arquivo VARCHAR(255) NOT NULL,
     url_arquivo TEXT NOT NULL,
-    tipo VARCHAR(30),
-    tamanho INTEGER,
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

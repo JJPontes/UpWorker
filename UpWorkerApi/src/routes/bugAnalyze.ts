@@ -1,8 +1,7 @@
-import { Router, Request, Response } from 'express';
-import { avaliarDescricaoBug } from '../controllers/bugAnalyzeController';
+import { Router, Request, Response } from "express";
+import { avaliarDescricaoBug } from "../controllers/bugAnalyzeController";
 
 const router = Router();
-
 
 /**
  * @swagger
@@ -34,16 +33,18 @@ const router = Router();
  *       400:
  *         description: Descrição não informada
  */
-router.post('/', async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   const { description } = req.body;
-  if (!description || typeof description !== 'string') {
+  if (!description || typeof description !== "string") {
     return res.status(400).json({ suggestions: ["Descrição não informada."] });
   }
   const result = avaliarDescricaoBug(description);
   if (result.ok) {
     return res.json({ suggestions: [] });
   } else {
-    return res.json({ suggestions: [result.sugestao || "Melhore a descrição do bug."] });
+    return res.json({
+      suggestions: [result.sugestao || "Melhore a descrição do bug."],
+    });
   }
 });
 

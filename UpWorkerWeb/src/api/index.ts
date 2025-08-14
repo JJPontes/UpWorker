@@ -58,7 +58,24 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    toast.error("Erro na comunicação com o servidor!");
+    if (error.response) {
+      // Erro retornado pelo servidor (ex: 500, 400, etc)
+      const status = error.response.status;
+      if (status === 500) {
+        toast.error("Erro interno do servidor (500). Tente novamente mais tarde ou contate o suporte.");
+      } else if (status === 400) {
+        toast.error("Dados inválidos ou campos obrigatórios ausentes (400).");
+      } else if (status === 404) {
+        toast.error("Recurso não encontrado (404).");
+      } else if (status === 403) {
+        toast.error("Acesso negado (403). Você não tem permissão para esta ação.");
+      } else {
+        toast.error(`Erro ${status}: ${error.response.data?.erro || 'Ocorreu um erro.'}`);
+      }
+    } else {
+      // Erro de rede ou sem resposta do servidor
+      toast.error("Erro na comunicação com o servidor! Verifique sua conexão ou tente novamente.");
+    }
     return Promise.reject(error);
   },
 );

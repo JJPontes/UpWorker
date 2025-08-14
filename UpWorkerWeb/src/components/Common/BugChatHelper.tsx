@@ -31,7 +31,7 @@ const BugChatHelper: React.FC<BugChatHelperProps> = ({
     setLoading(true);
     setError("");
     // Call backend API for bug description analysis
-    fetch("/api/bug-analyze", {
+    fetch("/api/bugAnalyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ description }),
@@ -90,7 +90,7 @@ const BugChatHelper: React.FC<BugChatHelperProps> = ({
       )}
       {!loading && !error && suggestions.length === 0 && (
         <Typography variant="body2" color="textSecondary">
-          Nenhuma sugestão encontrada. Tente detalhar mais o problema.
+          Nenhuma sugestão encontrada.
         </Typography>
       )}
     </Paper>
